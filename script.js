@@ -1,6 +1,3 @@
-let humanScore = 0;
-let computerScore = 0;
-
 function getComputerChoice() {
     let computerChoice;
     let random = Math.floor(Math.random() * 3);
@@ -19,35 +16,69 @@ function getComputerChoice() {
 function getHumanChoice() {
     let humanChoice = prompt("What is your choice?");
     humanChoice = humanChoice.toLowerCase();
-    if (humanChoice !== "rock" && humanChoice !== "paper" && humanChoice !== "scissors") {
-        return "Invalid choice!";
-    }
     return humanChoice;
 }
 
 function playRound(humanChoice, computerChoice) {
     let result = false;
-    if (humanChoice === "rock" && computerChoice === "scissors") {
-        result = true;
-    }
-    if (humanChoice === "paper" && computerChoice === "rock") {
-        result = true;
-    }
-    if (humanChoice === "scissors" && computerChoice === "paper") {
-        result = true;
-    }
-
-    if (result === true) {
-        console.log("Congrats, you won the round!");
-        humanScore++;
+    if (humanChoice === computerChoice) {
+        console.log("It's a Draw...");
+        return "Draw";
     }
     else {
-        console.log(`Oof, you lost this one. ${computerChoice} beats ${humanChoice}`);
-        computerScore++;
+        if (humanChoice === "rock" && computerChoice === "scissors") {
+            result = true;
+        }
+        if (humanChoice === "paper" && computerChoice === "rock") {
+            result = true;
+        }
+        if (humanChoice === "scissors" && computerChoice === "paper") {
+            result = true;
+        }
+    
+        if (result === true) {
+            console.log("Congrats, you won the round!");
+            return "Human"
+        }
+        else {
+            console.log(`Oof, you lost this one. ${computerChoice} beats ${humanChoice}`);
+            return "Computer"
+        }
     }
 }
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+function playGame() {
+    let humanScore = 0;
+    let computerScore = 0;
 
-playRound(humanSelection, computerSelection);
+    for(let i = 0; i < 5; i++) {
+        const humanSelection = getHumanChoice();
+        const computerSelection = getComputerChoice();
+
+        if (humanSelection !== "rock" && humanSelection !== "paper" && humanSelection !== "scissors") {
+            console.log("Invalid choice detected, skipping...")
+            i--;
+        }
+        else {
+            let result = playRound(humanSelection, computerSelection);
+            if(result === "Human") {
+                humanScore++;
+            }
+            else if(result === "Computer") {
+                computerScore++;
+            }
+        }
+    }
+
+    if(humanScore > computerScore) {
+        console.log(`Congrats! you won the game. Final counter: You - ${humanScore}  AI - ${computerScore}`);
+    }
+    else if(computerScore > humanScore) {
+        console.log(`You lost this one. Final counter: You - ${humanScore}  AI - ${computerScore}`);
+    }
+    else {
+        console.log("Huh, that's weird...")
+    }
+}
+
+playGame();
