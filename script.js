@@ -1,84 +1,78 @@
+function setupUI() {
+    const divButtons = document.querySelector(".buttons");
+    const btnRock = document.createElement("button");
+    const btnPaper = ocument.createElement("button");
+    const btnScissors = document.createElement("button");
+    const lblResults = document.querySelector(".results");
+
+    btnRock.textContent = "Rock";
+    btnPaper.textContent = "Paper";
+    btnScissors.textContent = "Scissors";
+
+    btnRock. value = "Rock";
+    btnPaper. value = "Paper";
+    btnScissors. value = "Scissors";
+
+    const buttons = [btnRock, btnPaper, btnScissors];
+
+    buttons.forEach(button => {
+        button.addEventListener("click", e => {
+            const result = "";
+            result = playRound(e.target.value, getComputerChoice());
+        })
+        divButtons.appendChild(button);
+    });
+}
+
 function getComputerChoice() {
     let computerChoice;
     let random = Math.floor(Math.random() * 3);
     if (random === 1) {
-        computerChoice = "rock";
+        computerChoice = "Rock";
     }
     else if (random === 2) {
-        computerChoice = "paper";
+        computerChoice = "Paper";
     }
     else {
-        computerChoice = "scissors";
+        computerChoice = "Scissors";
     }
     return computerChoice;
 }
 
-function getHumanChoice() {
-    let humanChoice = prompt("What is your choice?");
-    humanChoice = humanChoice.toLowerCase();
-    return humanChoice;
-}
+// function getHumanChoice() {
+//     let humanChoice = prompt("What is your choice?");
+//     humanChoice = humanChoice.toLowerCase();
+//     return humanChoice;
+// }
 
 function playRound(humanChoice, computerChoice) {
     let result = false;
     if (humanChoice === computerChoice) {
-        console.log("It's a Draw...");
+        lblResults.textContent = "It's a draw...";
         return "Draw";
     }
     else {
-        if (humanChoice === "rock" && computerChoice === "scissors") {
+        if (humanChoice === "Rock" && computerChoice === "Scissors") {
             result = true;
         }
-        if (humanChoice === "paper" && computerChoice === "rock") {
+        if (humanChoice === "Paper" && computerChoice === "Rock") {
             result = true;
         }
-        if (humanChoice === "scissors" && computerChoice === "paper") {
+        if (humanChoice === "Scissors" && computerChoice === "Paper") {
             result = true;
         }
     
         if (result === true) {
-            console.log("Congrats, you won the round!");
+            lblResults.textContent = "Congrats! you win this round.";
             return "Human"
         }
         else {
-            console.log(`Oof, you lost this one. ${computerChoice} beats ${humanChoice}`);
+            lblResults.textContent = `Oof, you lost this one. ${computerChoice} beats ${humanChoice}`;
             return "Computer"
         }
     }
 }
 
 function playGame() {
-    let humanScore = 0;
-    let computerScore = 0;
-
-    for(let i = 0; i < 5; i++) {
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-
-        if (humanSelection !== "rock" && humanSelection !== "paper" && humanSelection !== "scissors") {
-            console.log("Invalid choice detected, skipping...")
-            i--;
-        }
-        else {
-            let result = playRound(humanSelection, computerSelection);
-            if(result === "Human") {
-                humanScore++;
-            }
-            else if(result === "Computer") {
-                computerScore++;
-            }
-        }
-    }
-
-    if(humanScore > computerScore) {
-        console.log(`Congrats! you won the game. Final counter: You - ${humanScore}  AI - ${computerScore}`);
-    }
-    else if(computerScore > humanScore) {
-        console.log(`You lost this one. Final counter: You - ${humanScore}  AI - ${computerScore}`);
-    }
-    else {
-        console.log("Huh, that's weird...")
-    }
+    
 }
-
-playGame();
