@@ -1,10 +1,10 @@
-function setupUI() {
-    const divButtons = document.querySelector(".buttons");
-    const btnRock = document.createElement("button");
-    const btnPaper = ocument.createElement("button");
-    const btnScissors = document.createElement("button");
-    const lblResults = document.querySelector(".results");
+const divButtons = document.querySelector(".buttons");
+const btnRock = document.createElement("button");
+const btnPaper = document.createElement("button");
+const btnScissors = document.createElement("button");
+const lblResults = document.querySelector(".results");
 
+function setupUI() {
     btnRock.textContent = "Rock";
     btnPaper.textContent = "Paper";
     btnScissors.textContent = "Scissors";
@@ -13,12 +13,16 @@ function setupUI() {
     btnPaper. value = "Paper";
     btnScissors. value = "Scissors";
 
+    counterHuman = 0;
+    counterComputer = 0;
+
     const buttons = [btnRock, btnPaper, btnScissors];
 
     buttons.forEach(button => {
         button.addEventListener("click", e => {
-            const result = "";
+            let result = "";
             result = playRound(e.target.value, getComputerChoice());
+            updateCounter(result);
         })
         divButtons.appendChild(button);
     });
@@ -38,12 +42,6 @@ function getComputerChoice() {
     }
     return computerChoice;
 }
-
-// function getHumanChoice() {
-//     let humanChoice = prompt("What is your choice?");
-//     humanChoice = humanChoice.toLowerCase();
-//     return humanChoice;
-// }
 
 function playRound(humanChoice, computerChoice) {
     let result = false;
@@ -73,6 +71,29 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
-function playGame() {
-    
+function updateCounter(result) {
+    if (counterComputer == 5) {
+        alert("The AI has won this game! :(");
+        resetGame();
+    }
+    else if (counterHuman) {
+        alert("You have won! Congratulations.");
+        resetGame();
+    }
+    else {
+        if (result = "Computer") {
+            counterComputer++;
+        }
+        else {
+            counterHuman++;
+        }
+    }
 }
+
+function resetGame() {
+    counterComputer = 0;
+    counterHuman = 0;
+    lblResults.textContent = "";
+}
+
+setupUI();
