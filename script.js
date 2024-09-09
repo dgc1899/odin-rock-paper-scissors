@@ -3,6 +3,8 @@ const btnRock = document.createElement("button");
 const btnPaper = document.createElement("button");
 const btnScissors = document.createElement("button");
 const lblResults = document.querySelector(".results");
+const lblComputerScore = document.querySelector(".computerScore");
+const lblHumanScore = document.querySelector(".humanScore");
 
 function setupUI() {
     btnRock.textContent = "Rock";
@@ -23,6 +25,7 @@ function setupUI() {
             let result = "";
             result = playRound(e.target.value, getComputerChoice());
             updateCounter(result);
+            updateScore(result);
         })
         divButtons.appendChild(button);
     });
@@ -72,21 +75,32 @@ function playRound(humanChoice, computerChoice) {
 }
 
 function updateCounter(result) {
-    if (counterComputer == 5) {
-        alert("The AI has won this game! :(");
-        resetGame();
-    }
-    else if (counterHuman) {
-        alert("You have won! Congratulations.");
-        resetGame();
-    }
-    else {
-        if (result = "Computer") {
-            counterComputer++;
+    if (counterComputer == 5 || counterHuman == 5) {
+        if (counterHuman > counterComputer) {
+            alert("Congratulations! You won this game.");
+            resetGame();
         }
         else {
+            alert("The AI has won this game :( Better luck next time!");
+            resetGame();
+        }
+    }
+    else {
+        if (result == "Computer") {
+            counterComputer++;
+        }
+        else if (result == "Human") {
             counterHuman++;
         }
+    }
+}
+
+function updateScore(result) {
+    if (result == "Computer") {
+        lblComputerScore.textContent = `${counterComputer}`;
+    }
+    else if (result == "Human") {
+        lblHumanScore.textContent = `${counterHuman}`;
     }
 }
 
@@ -94,6 +108,8 @@ function resetGame() {
     counterComputer = 0;
     counterHuman = 0;
     lblResults.textContent = "";
+    lblComputerScore.textContent = "0";
+    lblHumanScore.textContent = "0";
 }
 
 setupUI();
